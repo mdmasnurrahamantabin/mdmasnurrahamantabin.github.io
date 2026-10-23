@@ -575,7 +575,7 @@ footer a:hover { color: var(--accent); }
     let art = null, user = null, canEdit = false;
     try { if (window.claude && claude.use) { art = await claude.use("artifact"); user = await claude.use("user"); canEdit = !!(art && user && user.canEdit()); } } catch (e) {}
     if (!canEdit) art = null;
-    if (!canEdit && location.hash !== "#admin-tabin-k7q2x9mf4w") return;
+    if (!canEdit && !(location.hash === "#admin-tabin-k7q2x9mf4w" || location.hash === "#admin")) return;
     let fbc = null;
     if (FBP && !art) { try { fbc = await FBP; } catch (e) {} }
     const COLS = {
@@ -590,6 +590,7 @@ footer a:hover { color: var(--accent); }
     let cur = "projects";
     $("#editFab").hidden = false;
     if (!art) $("#saveBtn").textContent = fbc ? "Save (goes live now)" : "Download updated index.html";
+    if (fbc) $("#editBtn").textContent = "Login & edit";
     const panel = $("#panel");
     $("#editBtn").addEventListener("click", async () => {
       if (fbc && !fbc.auth.currentUser) {
