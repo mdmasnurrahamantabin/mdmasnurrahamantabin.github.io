@@ -576,7 +576,12 @@ footer a:hover { color: var(--accent); }
     let art = null, user = null, canEdit = false;
     try { if (window.claude && claude.use) { art = await claude.use("artifact"); user = await claude.use("user"); canEdit = !!(art && user && user.canEdit()); } } catch (e) {}
     if (!canEdit) art = null;
-    if (!canEdit && !(location.hash === "#admin-tabin-k7q2x9mf4w" || location.hash === "#admin")) return;
+    const isAdminHash = () => ["#admin", "#admin-tabin-k7q2x9mf4w"].includes((location.hash || "").toLowerCase());
+    // If the admin hash is added after the page is already open, reload into admin mode.
+    if (!canEdit && !isAdminHash()) {
+      window.addEventListener("hashchange", () => { if (isAdminHash()) window.location.reload(); });
+      return;
+    }
     let fbc = null;
     if (FBP && !art) { try { fbc = await FBP; } catch (e) {} }
     const COLS = {
