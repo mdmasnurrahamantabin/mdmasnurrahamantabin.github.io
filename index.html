@@ -253,21 +253,21 @@ footer a:hover { color: var(--accent); }
     <div class="grid" id="svcGrid"></div>
   </section>
 
-  <section id="projects">
+  <section id="projects-section">
     <p class="eyebrow" data-i18n="nav_projects">Projects</p>
     <h2 class="sec-title" data-i18n="prj_title"></h2>
     <p class="sec-sub" data-i18n="prj_sub"></p>
     <div class="grid" id="projectsGrid" data-render></div>
   </section>
 
-  <section id="courses">
+  <section id="courses-section">
     <p class="eyebrow" data-i18n="nav_courses">Courses</p>
     <h2 class="sec-title" data-i18n="crs_title"></h2>
     <p class="sec-sub" data-i18n="crs_sub"></p>
     <div class="grid" id="coursesGrid" data-render></div>
   </section>
 
-  <section id="certs">
+  <section id="certs-section">
     <p class="eyebrow" data-i18n="cert_eyebrow">Achievements</p>
     <h2 class="sec-title" data-i18n="cert_title"></h2>
     <div class="grid" id="certsGrid" data-render></div>
@@ -282,19 +282,19 @@ footer a:hover { color: var(--accent); }
     </div>
   </section>
 
-  <section id="reviews">
+  <section id="reviews-section">
     <p class="eyebrow" data-i18n="rev_eyebrow">Reviews</p>
     <h2 class="sec-title" data-i18n="rev_title"></h2>
     <div class="grid" id="reviewsGrid" data-render></div>
   </section>
 
-  <section id="faq">
+  <section id="faq-section">
     <p class="eyebrow">FAQ</p>
     <h2 class="sec-title" data-i18n="faq_title"></h2>
     <div id="faqGrid" data-render></div>
   </section>
 
-  <section id="blog">
+  <section id="blog-section">
     <p class="eyebrow" data-i18n="blog_eyebrow">Blog</p>
     <h2 class="sec-title" data-i18n="blog_title"></h2>
     <div class="grid" id="blogGrid" data-render></div>
@@ -523,7 +523,7 @@ footer a:hover { color: var(--accent); }
 
   /* active nav */
   const navLinks = $$("nav.main a");
-  const secs = ["home", "about", "services", "projects", "courses", "contact"];
+  const secs = ["home", "about", "services", "projects-section", "courses-section", "contact"];
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id)); }), { rootMargin: "-45% 0px -50% 0px" });
     secs.forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); });
