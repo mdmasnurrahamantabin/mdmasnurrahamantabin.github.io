@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Md. Masnur Rahaman Tabin - Web Designer, SEO Consultant, Digital Marketer from Bangladesh.">
+<script src="firebase-config.js"></script>
+</head>
+<body>
+<title>Masnur Tabin Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&family=Hind+Siliguri:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style id="site-css">
+/* Layout: black stage, one cyan accent. Sticky top menu, language switch on a side rail, photo hero with a quiet particle field. */
+:root {
+  --bg: #050606;
+  --surface: #0b0e0f;
+  --surface-2: #101415;
+  --line: #1b2123;
+  --fg: #eef3f3;
+  --muted: #8a989b;
+  --accent: #27d8e8;
+  --accent-ink: #021012;
+  --display: "Unbounded", "Hind Siliguri", system-ui, sans-serif;
+  --body: "Manrope", "Hind Siliguri", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.65; margin: 0; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.15; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+#bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: .55; }
+.wrap { position: relative; z-index: 1; max-width: 1160px; margin-inline: auto; }
+section { padding-block: 88px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.sec-title { font-size: clamp(26px, 4vw, 42px); margin-bottom: 14px; }
+.sec-sub { color: var(--muted); max-width: 60ch; margin-bottom: 40px; }
+
+/* header */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(5,6,6,.82); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+.bar { max-width: 1160px; margin-inline: auto; display: flex; align-items: center; gap: 20px; height: 64px; }
+.logo { font-family: var(--display); font-weight: 700; font-size: 18px; letter-spacing: .02em; flex: none; }
+.logo span { color: var(--accent); }
+nav.main { display: flex; gap: 4px; margin-inline: auto; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+nav.main::-webkit-scrollbar { display: none; }
+nav.main a { padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--muted); white-space: nowrap; transition: color .2s, background .2s; }
+nav.main a:hover, nav.main a.on { color: var(--fg); background: var(--surface-2); }
+nav.main a.on { box-shadow: inset 0 -2px 0 var(--accent); }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border-radius: 10px; font-weight: 700; font-size: 14px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-family: var(--body); color: var(--fg); transition: transform .2s, border-color .2s, background .2s; }
+.btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.primary:hover { background: #5fe9f5; }
+.btn.small { padding: 9px 16px; flex: none; }
+
+/* side language rail */
+.rail { position: fixed; z-index: 55; right: max(10px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 4px; padding: 6px; border: 1px solid var(--line); border-radius: 999px; background: rgba(11,14,15,.9); backdrop-filter: blur(10px); }
+.rail button { width: 40px; height: 40px; border-radius: 50%; border: 0; background: transparent; color: var(--muted); font: 700 12px var(--body); cursor: pointer; }
+.rail button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.rail .globe { font-family: var(--mono); font-size: 10px; text-align: center; color: var(--muted); letter-spacing: .1em; padding: 4px 0 2px; }
+
+/* hero */
+.hero { padding-block: 56px 72px; display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; min-height: 600px; }
+.hello { font-family: var(--mono); color: var(--accent); font-size: 14px; letter-spacing: .08em; margin-bottom: 18px; }
+.hero h1 { font-size: clamp(30px, 5vw, 56px); margin-bottom: 18px; }
+.role { font-family: var(--display); font-size: clamp(16px, 2.2vw, 24px); min-height: 1.6em; margin-bottom: 18px; color: var(--accent); }
+.role::after { content: ""; display: inline-block; width: 2px; height: 1em; background: var(--accent); margin-left: 4px; vertical-align: -.12em; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.tagline { color: var(--muted); font-size: 18px; max-width: 46ch; margin-bottom: 30px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.portrait { position: relative; justify-self: center; width: min(100%, 400px); aspect-ratio: 3 / 4; }
+.portrait::before { content: ""; position: absolute; inset: 8% 4% 4%; border-radius: 50%; background: radial-gradient(circle at 50% 40%, rgba(39,216,232,.28), rgba(39,216,232,0) 68%); filter: blur(6px); }
+.portrait .ring { position: absolute; inset: 6% 2% 2%; border-radius: 50%; border: 1px dashed rgba(39,216,232,.4); animation: spin 40s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom; -webkit-mask-image: linear-gradient(#000 82%, transparent 100%); mask-image: linear-gradient(#000 82%, transparent 100%); }
+.chip { position: absolute; padding: 7px 13px; border-radius: 999px; background: rgba(11,14,15,.92); border: 1px solid var(--line); font-family: var(--mono); font-size: 12px; animation: float 6s ease-in-out infinite; }
+.chip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-right: 8px; }
+.chip.c1 { left: -4%; top: 20%; } .chip.c2 { right: -2%; top: 44%; animation-delay: -2s; } .chip.c3 { left: 2%; bottom: 14%; animation-delay: -4s; }
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+/* ticker */
+.ticker { border-block: 1px solid var(--line); overflow: hidden; padding-block: 16px; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); position: relative; z-index: 1; background: rgba(5,6,6,.7); }
+.ticker-track { display: flex; gap: 44px; width: max-content; animation: slide 38s linear infinite; font-family: var(--mono); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.ticker-track span::before { content: "/"; color: var(--accent); margin-right: 44px; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* about */
+.about { display: grid; grid-template-columns: 1.2fr .8fr; gap: 48px; }
+.about p.lead { font-size: 18px; margin-bottom: 26px; }
+.now { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.now li { display: flex; gap: 12px; align-items: baseline; color: var(--fg); }
+.now li::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); flex: none; transform: translateY(-1px); }
+.stats { display: grid; gap: 14px; align-content: start; }
+.stat { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 20px 24px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.stat b { font-family: var(--display); font-size: 40px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); text-align: right; }
+.edu { margin-top: 28px; border-left: 2px solid var(--accent); padding-left: 16px; }
+.edu small { font-family: var(--mono); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; font-size: 11px; }
+.skills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; }
+.skills span { padding: 8px 16px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-size: 14px; transition: border-color .2s, color .2s; }
+.skills span:hover { border-color: var(--accent); color: var(--accent); }
+
+/* cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 26px; display: flex; flex-direction: column; gap: 12px; min-width: 0; transition: border-color .25s, transform .25s; }
+.card:hover { border-color: rgba(39,216,232,.55); transform: translateY(-4px); }
+.card h3 { font-size: 17px; line-height: 1.3; }
+.card p { color: var(--muted); font-size: 15px; }
+.card .meta { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .08em; }
+.card .ico { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); display: grid; place-items: center; color: var(--accent); background: var(--surface-2); }
+.card .ico svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.card img.thumb { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; background: var(--surface-2); }
+.card a.more { margin-top: auto; color: var(--accent); font-weight: 700; font-size: 14px; }
+.quote p { color: var(--fg); font-size: 16px; }
+.empty { border: 1px dashed var(--line); border-radius: 14px; padding: 36px 28px; display: flex; gap: 18px; align-items: center; background: var(--surface); }
+.empty .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); flex: none; box-shadow: 0 0 0 6px rgba(39,216,232,.15); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 10px rgba(39,216,232,0); } }
+.empty b { display: block; font-family: var(--display); font-weight: 500; font-size: 15px; margin-bottom: 4px; }
+.empty span { color: var(--muted); font-size: 14px; }
+.soon-tag { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); border: 1px solid rgba(39,216,232,.4); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+
+/* agency */
+.agency { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.agency .card { padding: 32px; }
+
+/* faq */
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0 22px; }
+details + details { margin-top: 10px; }
+summary { cursor: pointer; padding: 18px 0; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--accent); font-family: var(--mono); font-size: 20px; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 18px; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.rows { display: grid; gap: 12px; align-content: start; }
+.row { display: flex; align-items: center; gap: 14px; padding: 16px 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); min-width: 0; }
+.row small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.row .v { overflow-wrap: anywhere; font-weight: 500; }
+.row > div { min-width: 0; flex: 1; }
+.copy { border: 1px solid var(--line); background: transparent; color: var(--muted); border-radius: 8px; padding: 6px 12px; font: 600 12px var(--body); cursor: pointer; flex: none; }
+.copy:hover { color: var(--accent); border-color: var(--accent); }
+form.msg { display: grid; gap: 12px; align-content: start; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 24px; }
+label { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: grid; gap: 6px; }
+input, textarea, select { width: 100%; background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; font: 400 15px var(--body); letter-spacing: 0; text-transform: none; }
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); }
+textarea { min-height: 120px; resize: vertical; }
+footer { border-top: 1px solid var(--line); padding-block: 34px 90px; display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; color: var(--muted); font-size: 14px; margin-inline: auto; max-width: 1160px; position: relative; z-index: 1; }
+footer nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+footer a:hover { color: var(--accent); }
+#toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 30px); background: var(--accent); color: var(--accent-ink); padding: 10px 20px; border-radius: 999px; font-weight: 700; font-size: 14px; opacity: 0; pointer-events: none; transition: .3s; z-index: 90; }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* owner edit */
+#editFab { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 80; }
+#panel { position: fixed; inset: 0; z-index: 85; background: rgba(0,0,0,.7); display: flex; justify-content: flex-end; }
+#panel[hidden] { display: none; }
+#panel .sheet { width: min(480px, 100%); background: var(--surface); border-left: 1px solid var(--line); overflow-y: auto; padding: 24px max(20px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) 20px; display: grid; gap: 16px; align-content: start; }
+#panel h3 { font-size: 18px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { background: var(--bg); border: 1px solid var(--line); color: var(--muted); border-radius: 999px; padding: 6px 14px; font: 600 12px var(--body); cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.item span { min-width: 0; overflow-wrap: anywhere; font-size: 14px; }
+.item button { background: transparent; border: 1px solid var(--line); color: #ff8b8b; border-radius: 6px; padding: 4px 10px; cursor: pointer; font: 600 12px var(--body); }
+.hint { color: var(--muted); font-size: 13px; }
+
+@media (max-width: 860px) {
+  section { padding-block: 60px; }
+  .hero { grid-template-columns: 1fr; min-height: 0; gap: 24px; padding-block: 28px 56px; }
+  .portrait { order: -1; width: min(78%, 320px); }
+  .about, .contact { grid-template-columns: 1fr; }
+  .bar .btn.small { display: none; }
+  .rail { top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: none; flex-direction: row; right: max(12px, env(safe-area-inset-right, 0px)); }
+  .rail .globe { display: none; }
+  .chip.c1 { left: 0; } .chip.c2 { right: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<header class="top">
+  <div class="bar">
+    <a class="logo" href="#home" aria-label="Home">Masnur<span>.</span>Tabin</a>
+    <nav class="main" aria-label="Main">
+      <a href="#home" data-i18n="nav_home" class="on">Home</a>
+      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="#services" data-i18n="nav_services">Services</a>
+      <a href="#projects" data-i18n="nav_projects">Projects</a>
+      <a href="#courses" data-i18n="nav_courses">Courses</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </nav>
+    <a class="btn primary small" id="hireTop" href="#contact" data-i18n="hire">Hire me</a>
+  </div>
+</header>
+
+<div class="rail" role="group" aria-label="Language">
+  <div class="globe">LANG</div>
+  <button id="langEn" type="button" aria-pressed="true">EN</button>
+  <button id="langBn" type="button" aria-pressed="false">বাং</button>
+</div>
+
+<main class="wrap">
+  <section id="home" class="hero" style="padding-top:56px">
+    <div>
+      <p class="hello" data-i18n="hello">// Hello, I'm</p>
+      <h1 id="heroName">Md. Masnur Rahaman Tabin</h1>
+      <p class="role" id="role" aria-live="off"></p>
+      <p class="tagline" data-i18n="tagline"></p>
+      <div class="actions">
+        <a class="btn primary" id="waHero" href="https://wa.me/8801742985026" target="_blank" rel="noopener"><span data-i18n="wa">Chat on WhatsApp</span></a>
+        <a class="btn" href="#projects" data-i18n="see_work">See my work</a>
+      </div>
+    </div>
+    <div class="portrait">
+      <div class="ring"></div>
+      <img src="tabin.png" alt="Md. Masnur Rahaman Tabin in a black suit" width="760" height="1010">
+      <span class="chip c1"><i></i>SEO</span>
+      <span class="chip c2"><i></i>WordPress</span>
+      <span class="chip c3"><i></i>AI Prompts</span>
+    </div>
+  </section>
+</main>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<main class="wrap">
+  <section id="about">
+    <p class="eyebrow" data-i18n="nav_about">About</p>
+    <h2 class="sec-title" data-i18n="about_title"></h2>
+    <div class="about">
+      <div>
+        <p class="lead" data-i18n="about_text"></p>
+        <ul class="now" id="now"></ul>
+        <div class="edu"><small data-i18n="edu_label">Education</small><p data-i18n="edu_text"></p></div>
+      </div>
+      <div class="stats" id="stats" data-render></div>
+    </div>
+    <div class="skills" id="skills"></div>
+  </section>
+
+  <section id="services">
+    <p class="eyebrow" data-i18n="nav_services">Services</p>
+    <h2 class="sec-title" data-i18n="svc_title"></h2>
+    <p class="sec-sub" data-i18n="svc_sub"></p>
+    <div class="grid" id="svcGrid"></div>
+  </section>
+
+  <section id="projects">
+    <p class="eyebrow" data-i18n="nav_projects">Projects</p>
+    <h2 class="sec-title" data-i18n="prj_title"></h2>
+    <p class="sec-sub" data-i18n="prj_sub"></p>
+    <div class="grid" id="projects" data-render></div>
+  </section>
+
+  <section id="courses">
+    <p class="eyebrow" data-i18n="nav_courses">Courses</p>
+    <h2 class="sec-title" data-i18n="crs_title"></h2>
+    <p class="sec-sub" data-i18n="crs_sub"></p>
+    <div class="grid" id="courses" data-render></div>
+  </section>
+
+  <section id="certs">
+    <p class="eyebrow" data-i18n="cert_eyebrow">Achievements</p>
+    <h2 class="sec-title" data-i18n="cert_title"></h2>
+    <div class="grid" id="certs" data-render></div>
+  </section>
+
+  <section id="agency">
+    <p class="eyebrow">Masmia</p>
+    <h2 class="sec-title" data-i18n="ag_title"></h2>
+    <div class="agency">
+      <div class="card"><span class="soon-tag" data-i18n="soon">Coming soon</span><h3>Masmia Digital</h3><p data-i18n="ag_digital"></p><p class="meta" data-i18n="ag_site">Website: coming soon</p></div>
+      <div class="card"><span class="soon-tag" data-i18n="soon">Coming soon</span><h3>Masmia Group</h3><p data-i18n="ag_group"></p></div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <p class="eyebrow" data-i18n="rev_eyebrow">Reviews</p>
+    <h2 class="sec-title" data-i18n="rev_title"></h2>
+    <div class="grid" id="reviews" data-render></div>
+  </section>
+
+  <section id="faq">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="sec-title" data-i18n="faq_title"></h2>
+    <div id="faq" data-render></div>
+  </section>
+
+  <section id="blog">
+    <p class="eyebrow" data-i18n="blog_eyebrow">Blog</p>
+    <h2 class="sec-title" data-i18n="blog_title"></h2>
+    <div class="grid" id="blog" data-render></div>
+  </section>
+
+  <section id="contact">
+    <p class="eyebrow" data-i18n="nav_contact">Contact</p>
+    <h2 class="sec-title" data-i18n="ct_title"></h2>
+    <p class="sec-sub" data-i18n="ct_sub"></p>
+    <div class="contact">
+      <div class="rows" id="rows" data-render></div>
+      <form class="msg" id="msgForm" autocomplete="off">
+        <label for="fName"><span data-i18n="f_name">Your name</span><input id="fName" type="text" maxlength="80"></label>
+        <label for="fType"><span data-i18n="f_type">I need help with</span>
+          <select id="fType"><option value="Web Design">Web Design &amp; Development</option><option value="SEO">SEO</option><option value="Digital Marketing">Digital Marketing</option><option value="Social Media">Social Media Marketing</option><option value="Graphics">Graphics</option><option value="Other">Other</option></select></label>
+        <label for="fMsg"><span data-i18n="f_msg">Message</span><textarea id="fMsg" maxlength="600"></textarea></label>
+        <a class="btn primary" id="fSend" href="https://wa.me/8801742985026" target="_blank" rel="noopener" style="justify-content:center"><span data-i18n="f_send">Send on WhatsApp</span></a>
+        <p class="hint" data-i18n="f_hint"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p>© 2026 Md. Masnur Rahaman Tabin</p>
+  <nav aria-label="More"><a href="#certs" data-i18n="cert_eyebrow">Achievements</a><a href="#agency">Masmia</a><a href="#reviews" data-i18n="rev_eyebrow">Reviews</a><a href="#faq">FAQ</a><a href="#blog" data-i18n="blog_eyebrow">Blog</a></nav>
+</footer>
+
+<div id="toast" role="status"></div>
+<div id="editFab" hidden data-ephemeral><button class="btn primary" id="editBtn" type="button">Edit site</button></div>
+<div id="panel" hidden data-ephemeral>
+  <div class="sheet" role="dialog" aria-label="Edit site content">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h3>Edit content</h3><button class="btn small" id="closePanel" type="button">Close</button></div>
+    <p class="hint">Add or remove entries, then press Save and publish. Visitors see the new version after publishing.</p>
+    <div class="tabs" id="tabs"></div>
+    <div id="items" style="display:grid;gap:8px"></div>
+    <form id="addForm" style="display:grid;gap:10px" autocomplete="off">
+      <label for="aTitle"><span id="lTitle">Title</span><input id="aTitle" type="text" maxlength="140" required></label>
+      <label for="aText"><span id="lText">Details</span><textarea id="aText" maxlength="500" style="min-height:80px"></textarea></label>
+      <label for="aMeta"><span id="lMeta">Year / label</span><input id="aMeta" type="text" maxlength="80"></label>
+      <label for="aUrl"><span id="lUrl">Link (https://…)</span><input id="aUrl" type="text" maxlength="300"></label>
+      <label for="aImg"><span>Image (https link or file name)</span><input id="aImg" type="text" maxlength="300"></label>
+      <button class="btn" type="submit">Add entry</button>
+    </form>
+    <div id="statEdit" style="display:grid;gap:8px"></div>
+    <button class="btn primary" id="saveBtn" type="button">Save and publish</button>
+    <p class="hint" id="saveMsg"></p>
+  </div>
+</div>
+
+<script type="application/json" id="data">{"stats":[{"n":10,"s":"+","k":"st_projects"},{"n":4,"s":"","k":"st_services"},{"n":6,"s":"","k":"st_platforms"}],"projects":[],"courses":[],"certs":[],"reviews":[],"faq":[{"title":"How do we start a project?","text":"Send a message on WhatsApp with what you need. I reply with questions, a plan and a price before any work begins."},{"title":"Which services do you offer?","text":"Web design and development, SEO, digital marketing, social media marketing and graphics."},{"title":"Can I get a website in Bangla?","text":"Yes. I build sites in Bangla, English or both, with a language switch like this one."},{"title":"How long does a website take?","text":"A simple site takes a few days. Larger sites take longer, and I give a time estimate once I know the scope."}],"blog":[],"links":[]}</script>
+
+<script>
+(function () {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const DATA = JSON.parse($("#data").textContent);
+  const EMAIL = "tabinweb.info@gmail.com", WA = "+8801742985026", WA_URL = "https://wa.me/8801742985026", FB = "https://www.facebook.com/mdmasnurtabin";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const T = {
+    en: {
+      nav_home: "Home", nav_about: "About", nav_services: "Services", nav_projects: "Projects", nav_courses: "Courses", nav_contact: "Contact", hire: "Hire me",
+      hello: "// Hello, I'm", name: "Md. Masnur Rahaman Tabin", tagline: "Your trusted partner in your digital life.",
+      wa: "Chat on WhatsApp", see_work: "See my work",
+      about_title: "Making the digital age simple for everyone",
+      about_text: "I live in Dhaka, Bangladesh, and I study BSc in Physics. I introduce people to the digital age, make daily life easier with technology, and work to help Bangladesh move forward.",
+      now: ["BSc in Physics", "Web design and development", "AI automation", "Digital marketing", "Social media marketing"],
+      edu_label: "Education", edu_text: "BSc in Physics, National University",
+      st_projects: "Projects completed", st_services: "Core services", st_platforms: "Platforms I market on",
+      svc_title: "What I can do for you", svc_sub: "Four services, one person who answers your messages.",
+      svc: [
+        ["Web Design & Development", "Fast, clean websites in WordPress and custom code, built for your brand and ready for search."],
+        ["Digital Marketing & SEO", "Keyword research, on-page SEO and campaigns that bring the right visitors to your business."],
+        ["Social Media Marketing", "Content plans and posting on Facebook, Instagram, LinkedIn, X, Pinterest and email."],
+        ["Graphics & Presentations", "Social posts, banners and presentations that look consistent and professional."]
+      ],
+      prj_title: "Selected work", prj_sub: "Real projects with links and details.",
+      crs_title: "Learn with me", crs_sub: "Courses on digital marketing, web and AI tools for beginners and intermediate learners.",
+      cert_eyebrow: "Achievements", cert_title: "Certificates and achievements",
+      ag_title: "The agency behind the work", ag_digital: "A digital agency for web design, SEO and social media growth, helping businesses in Bangladesh get found and get customers online.", ag_site: "Website: coming soon", ag_group: "The vision of Masmia Group will be shared here soon.", soon: "Coming soon",
+      rev_eyebrow: "Reviews", rev_title: "What clients say", faq_title: "Questions people ask", blog_eyebrow: "Blog", blog_title: "Notes and guides",
+      ct_title: "Let's work together", ct_sub: "Message me on WhatsApp for the quickest reply.",
+      f_name: "Your name", f_type: "I need help with", f_msg: "Message", f_send: "Send on WhatsApp", f_hint: "This opens WhatsApp with your message ready to send.",
+      copy: "Copy", copied: "Copied", lbl_email: "Email", lbl_wa: "WhatsApp", lbl_fb: "Facebook", open: "Open", view: "View",
+      empty: { projects: ["Projects are being added", "New work will appear here soon."], courses: ["Courses coming soon", "Enrollment details will be added here."], certs: ["Certificates are being added", "Achievements will appear here as they arrive."], reviews: ["Reviews will appear here", "Client feedback will be added after projects are delivered."], blog: ["First articles coming soon", "Guides on marketing and web will be posted here."] }
+    },
+    bn: {
+      nav_home: "হোম", nav_about: "পরিচিতি", nav_services: "সার্ভিস", nav_projects: "প্রজেক্ট", nav_courses: "কোর্স", nav_contact: "যোগাযোগ", hire: "যোগাযোগ করুন",
+      hello: "// আমি", name: "মোঃ মাশনুর রহমান তাবিন", tagline: "আপনার ডিজিটাল জীবনের বিশ্বস্ত সহযোগী।",
+      wa: "হোয়াটসঅ্যাপে মেসেজ", see_work: "আমার কাজ দেখুন",
+      about_title: "ডিজিটাল যুগকে সবার জন্য সহজ করা",
+      about_text: "আমি ঢাকা, বাংলাদেশে থাকি এবং পদার্থবিজ্ঞানে বিএসসি পড়ছি। মানুষকে বর্তমান ডিজিটাল যুগের সাথে পরিচয় করানো, প্রযুক্তি দিয়ে জীবন সহজ করা এবং বাংলাদেশের উন্নতিতে অবদান রাখাই আমার লক্ষ্য।",
+      now: ["পদার্থবিজ্ঞানে বিএসসি", "ওয়েব ডিজাইন ও ডেভেলপমেন্ট", "এআই অটোমেশন", "ডিজিটাল মার্কেটিং", "সোশ্যাল মিডিয়া মার্কেটিং"],
+      edu_label: "শিক্ষা", edu_text: "পদার্থবিজ্ঞানে বিএসসি, জাতীয় বিশ্ববিদ্যালয়",
+      st_projects: "সম্পন্ন প্রজেক্ট", st_services: "প্রধান সার্ভিস", st_platforms: "যেসব প্ল্যাটফর্মে মার্কেটিং করি",
+      svc_title: "আপনার জন্য যা করতে পারি", svc_sub: "চারটি সার্ভিস, আর একজন মানুষ যিনি আপনার মেসেজের উত্তর দেন।",
+      svc: [
+        ["ওয়েব ডিজাইন ও ডেভেলপমেন্ট", "ওয়ার্ডপ্রেস ও কাস্টম কোডে দ্রুত, পরিচ্ছন্ন ওয়েবসাইট, যা আপনার ব্র্যান্ডের জন্য তৈরি এবং সার্চে ভালো করতে প্রস্তুত।"],
+        ["ডিজিটাল মার্কেটিং ও এসইও", "কিওয়ার্ড রিসার্চ, অন-পেজ এসইও ও ক্যাম্পেইন, যা সঠিক ভিজিটরকে আপনার ব্যবসায় নিয়ে আসে।"],
+        ["সোশ্যাল মিডিয়া মার্কেটিং", "ফেসবুক, ইনস্টাগ্রাম, লিংকডইন, এক্স, পিন্টারেস্ট ও ইমেইলের জন্য কনটেন্ট প্ল্যান ও পোস্টিং।"],
+        ["গ্রাফিক্স ও প্রেজেন্টেশন", "সোশ্যাল পোস্ট, ব্যানার ও প্রেজেন্টেশন, যা দেখতে সুসংগত ও পেশাদার।"]
+      ],
+      prj_title: "নির্বাচিত কাজ", prj_sub: "লিংক ও বিবরণসহ আসল প্রজেক্ট।",
+      crs_title: "আমার সাথে শিখুন", crs_sub: "ডিজিটাল মার্কেটিং, ওয়েব ও এআই টুলসের কোর্স, শুরুর ও মাঝারি শিক্ষার্থীদের জন্য।",
+      cert_eyebrow: "অর্জন", cert_title: "সার্টিফিকেট ও অর্জন",
+      ag_title: "কাজের পেছনের এজেন্সি", ag_digital: "ওয়েব ডিজাইন, এসইও ও সোশ্যাল মিডিয়া গ্রোথের জন্য একটি ডিজিটাল এজেন্সি, যা বাংলাদেশের ব্যবসাকে অনলাইনে খুঁজে পেতে ও গ্রাহক পেতে সাহায্য করে।", ag_site: "ওয়েবসাইট: শীঘ্রই আসছে", ag_group: "মাসমিয়া গ্রুপের ভিশন শীঘ্রই এখানে জানানো হবে।", soon: "শীঘ্রই আসছে",
+      rev_eyebrow: "রিভিউ", rev_title: "ক্লায়েন্টরা কী বলেন", faq_title: "সাধারণ প্রশ্ন", blog_eyebrow: "ব্লগ", blog_title: "নোট ও গাইড",
+      ct_title: "চলুন একসাথে কাজ করি", ct_sub: "দ্রুত উত্তরের জন্য হোয়াটসঅ্যাপে মেসেজ দিন।",
+      f_name: "আপনার নাম", f_type: "যে বিষয়ে সাহায্য চাই", f_msg: "মেসেজ", f_send: "হোয়াটসঅ্যাপে পাঠান", f_hint: "এটি আপনার মেসেজসহ হোয়াটসঅ্যাপ খুলবে।",
+      copy: "কপি", copied: "কপি হয়েছে", lbl_email: "ইমেইল", lbl_wa: "হোয়াটসঅ্যাপ", lbl_fb: "ফেসবুক", open: "খুলুন", view: "দেখুন",
+      empty: { projects: ["প্রজেক্ট যোগ করা হচ্ছে", "নতুন কাজ শীঘ্রই এখানে দেখা যাবে।"], courses: ["কোর্স শীঘ্রই আসছে", "ভর্তির তথ্য এখানে যোগ করা হবে।"], certs: ["সার্টিফিকেট যোগ করা হচ্ছে", "অর্জনগুলো পাওয়া মাত্র এখানে দেখা যাবে।"], reviews: ["রিভিউ এখানে দেখা যাবে", "প্রজেক্ট ডেলিভারির পর ক্লায়েন্টদের মতামত যোগ করা হবে।"], blog: ["প্রথম লেখা শীঘ্রই আসছে", "মার্কেটিং ও ওয়েব নিয়ে গাইড এখানে প্রকাশ হবে।"] }
+    }
+  };
+  const ROLES = {
+    en: ["Web Designer & Developer", "SEO Consultant", "Digital Marketer", "Social Media Marketer", "AI Prompt Expert"],
+    bn: ["ওয়েব ডিজাইনার ও ডেভেলপার", "এসইও কনসালটেন্ট", "ডিজিটাল মার্কেটার", "সোশ্যাল মিডিয়া মার্কেটার", "এআই প্রম্পট এক্সপার্ট"]
+  };
+  const SKILLS = ["WordPress", "SEO", "Keyword research", "Social media marketing", "LinkedIn", "Facebook", "Instagram", "X", "Pinterest", "Email marketing", "Google Forms", "PowerPoint", "AI prompting", "Web design"];
+  const ICONS = [
+    '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>',
+    '<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-5-5"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>',
+    '<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.500-.5z"/></svg>'
+  ];
+  let lang = "en";
+  try { lang = localStorage.getItem("lang") === "bn" ? "bn" : "en"; } catch (e) {}
+  const t = k => T[lang][k];
+
+  /* helpers */
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    for (const k in (attrs || {})) { if (typeof attrs[k] === "function") el.addEventListener(k.slice(2), attrs[k]); else if (k === "class") el.className = attrs[k]; else if (k === "html") el.innerHTML = attrs[k]; else if (attrs[k] != null) el.setAttribute(k, attrs[k]); }
+    kids.flat().forEach(c => { if (c != null) el.append(c.nodeType ? c : document.createTextNode(c)); });
+    return el;
+  }
+  const safeUrl = u => /^https:\/\//i.test(u || "") ? u : "";
+  const safeImg = u => /^(https:\/\/|data:image\/|[\w\-./]+$)/i.test(u || "") ? u : "";
+  let toastT;
+  function toast(m) { const el = $("#toast"); el.textContent = m; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("show"), 1800); }
+  function copy(text) {
+    const done = () => toast(t("copied"));
+    try { navigator.clipboard.writeText(text).then(done, () => fallback()); } catch (e) { fallback(); }
+    function fallback() { const ta = h("textarea"); ta.value = text; document.body.append(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} ta.remove(); }
+  }
+
+  /* collection card renderers */
+  const CARD = {
+    projects: e => h("article", { class: "card" }, e.image && safeImg(e.image) ? h("img", { class: "thumb", src: safeImg(e.image), alt: "", loading: "lazy", onerror: ev => ev.target.remove() }) : null, e.meta ? h("span", { class: "meta" }, e.meta) : null, h("h3", {}, e.title), e.text ? h("p", {}, e.text) : null, safeUrl(e.url) ? h("a", { class: "more", href: safeUrl(e.url), target: "_blank", rel: "noopener" }, t("view") + " →") : null),
+    courses: e => h("article", { class: "card" }, e.meta ? h("span", { class: "meta" }, e.meta) : null, h("h3", {}, e.title), e.text ? h("p", {}, e.text) : null, safeUrl(e.url) ? h("a", { class: "more", href: safeUrl(e.url), target: "_blank", rel: "noopener" }, t("open") + " →") : null),
+    certs: e => h("article", { class: "card" }, e.image && safeImg(e.image) ? h("img", { class: "thumb", src: safeImg(e.image), alt: e.title, loading: "lazy", onerror: ev => ev.target.remove() }) : null, e.meta ? h("span", { class: "meta" }, e.meta) : null, h("h3", {}, e.title), e.text ? h("p", {}, e.text) : null),
+    reviews: e => h("article", { class: "card quote" }, h("p", {}, "“" + (e.text || "") + "”"), h("h3", {}, e.title), e.meta ? h("span", { class: "meta" }, e.meta) : null),
+    blog: e => h("article", { class: "card" }, e.meta ? h("span", { class: "meta" }, e.meta) : null, h("h3", {}, e.title), e.text ? h("p", {}, e.text) : null, safeUrl(e.url) ? h("a", { class: "more", href: safeUrl(e.url), target: "_blank", rel: "noopener" }, t("view") + " →") : null)
+  };
+  function empty(col) { const m = t("empty")[col]; return h("div", { class: "empty", style: "grid-column:1/-1" }, h("span", { class: "dot" }), h("div", {}, h("b", {}, m[0]), h("span", {}, m[1]))); }
+
+  function renderLists() {
+    for (const col of ["projects", "courses", "certs", "reviews", "blog"]) {
+      const box = $("#" + col); box.replaceChildren();
+      if (!DATA[col].length) box.append(empty(col)); else DATA[col].forEach(e => box.append(CARD[col](e)));
+    }
+    const f = $("#faq"); f.replaceChildren();
+    DATA.faq.forEach(e => f.append(h("details", {}, h("summary", {}, e.title), h("p", {}, e.text))));
+  }
+  function renderStats() {
+    const box = $("#stats"); box.replaceChildren();
+    DATA.stats.forEach(s => { const b = h("b", { "data-n": s.n, "data-s": s.s || "" }, s.n + (s.s || "")); box.append(h("div", { class: "stat" }, b, h("span", {}, t(s.k)))); });
+    if ("IntersectionObserver" in window && !reduce) {
+      const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { io.unobserve(en.target); count(en.target); } }), { threshold: .6 });
+      $$("#stats b").forEach(b => io.observe(b));
+    }
+  }
+  function count(b) { const n = +b.dataset.n, s = b.dataset.s, t0 = performance.now(); (function step(now) { const p = Math.min(1, (now - t0) / 1100); b.textContent = Math.round(n * (1 - Math.pow(1 - p, 3))) + (p === 1 ? s : ""); if (p < 1) requestAnimationFrame(step); })(t0); }
+  function renderContact() {
+    const rows = $("#rows"); rows.replaceChildren();
+    const add = (label, val, href, cp) => rows.append(h("div", { class: "row" }, h("div", {}, h("small", {}, label), href ? h("a", { class: "v", href, target: "_blank", rel: "noopener" }, val) : h("span", { class: "v" }, val)), cp ? h("button", { class: "copy", type: "button", onclick: () => copy(cp) }, t("copy")) : null));
+    add(t("lbl_email"), EMAIL, null, EMAIL);
+    add(t("lbl_wa"), WA, WA_URL, WA);
+    add(t("lbl_fb"), "facebook.com/mdmasnurtabin", FB, null);
+    DATA.links.forEach(l => add(l.title, safeUrl(l.url).replace(/^https:\/\/(www\.)?/, ""), safeUrl(l.url), null));
+  }
+  function renderStatic() {
+    $("#svcGrid").replaceChildren(...t("svc").map((s, i) => h("article", { class: "card" }, h("div", { class: "ico", html: ICONS[i] }), h("h3", {}, s[0]), h("p", {}, s[1]))));
+    $("#now").replaceChildren(...t("now").map(x => h("li", {}, x)));
+    $("#skills").replaceChildren(...SKILLS.map(s => h("span", {}, s)));
+    const tk = $("#ticker"); tk.replaceChildren(...[...SKILLS, ...SKILLS].map(s => h("span", {}, s)));
+  }
+  function applyLang() {
+    document.documentElement.lang = lang === "bn" ? "bn" : "en";
+    $$("[data-i18n]").forEach(el => { const v = T[lang][el.dataset.i18n]; if (typeof v === "string") el.textContent = v; });
+    $("#heroName").textContent = t("name");
+    $("#langEn").setAttribute("aria-pressed", lang === "en"); $("#langBn").setAttribute("aria-pressed", lang === "bn");
+    renderStatic(); renderStats(); renderLists(); renderContact(); updateWa(); startTyping();
+  }
+
+  /* typing */
+  let typeTimer;
+  function startTyping() {
+    clearTimeout(typeTimer);
+    const el = $("#role"), list = ROLES[lang]; let i = 0, j = 0, del = false;
+    if (reduce) { el.textContent = list[0]; return; }
+    (function tick() {
+      const w = list[i];
+      el.textContent = w.slice(0, j);
+      if (!del && j === w.length) { del = true; return void (typeTimer = setTimeout(tick, 1500)); }
+      if (del && j === 0) { del = false; i = (i + 1) % list.length; }
+      j += del ? -1 : 1;
+      typeTimer = setTimeout(tick, del ? 28 : 55);
+    })();
+  }
+
+  /* WhatsApp form link */
+  function updateWa() {
+    const n = $("#fName").value.trim(), ty = $("#fType").value, m = $("#fMsg").value.trim();
+    const txt = "Hello Tabin, " + (n ? "I'm " + n + ". " : "") + "I need help with " + ty + "." + (m ? " " + m : "");
+    $("#fSend").href = WA_URL + "?text=" + encodeURIComponent(txt);
+  }
+  ["#fName", "#fType", "#fMsg"].forEach(s => $(s).addEventListener("input", updateWa));
+  $("#msgForm").addEventListener("submit", e => e.preventDefault());
+
+  /* language */
+  function setLang(l) { lang = l; try { localStorage.setItem("lang", l); } catch (e) {} applyLang(); }
+  $("#langEn").addEventListener("click", () => setLang("en"));
+  $("#langBn").addEventListener("click", () => setLang("bn"));
+
+  /* active nav */
+  const navLinks = $$("nav.main a");
+  const secs = ["home", "about", "services", "projects", "courses", "contact"];
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + en.target.id)); }), { rootMargin: "-45% 0px -50% 0px" });
+    secs.forEach(id => { const s = document.getElementById(id); if (s) io.observe(s); });
+  }
+
+  /* particles */
+  (function () {
+    const c = $("#bg"), x = c.getContext("2d"); if (!x || reduce) return;
+    let w, hh, pts = [], mx = -999, my = -999;
+    function size() { const d = Math.min(devicePixelRatio || 1, 2); w = innerWidth; hh = innerHeight; c.width = w * d; c.height = hh * d; x.setTransform(d, 0, 0, d, 0, 0); const n = Math.round(Math.min(70, w * hh / 22000)); pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * hh, vx: (Math.random() - .5) * .28, vy: (Math.random() - .5) * .28 })); }
+    size(); addEventListener("resize", size);
+    addEventListener("pointermove", e => { mx = e.clientX; my = e.clientY; });
+    (function frame() {
+      x.clearRect(0, 0, w, hh);
+      pts.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > hh) p.vy *= -1; });
+      for (let i = 0; i < pts.length; i++) {
+        const a = pts[i];
+        x.fillStyle = "rgba(39,216,232,.8)"; x.fillRect(a.x - 1, a.y - 1, 2, 2);
+        for (let j = i + 1; j < pts.length; j++) { const b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 130) { x.strokeStyle = "rgba(39,216,232," + (.22 * (1 - d / 130)) + ")"; x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); } }
+        const dm = Math.hypot(a.x - mx, a.y - my); if (dm < 160) { x.strokeStyle = "rgba(39,216,232," + (.5 * (1 - dm / 160)) + ")"; x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(mx, my); x.stroke(); }
+      }
+      requestAnimationFrame(frame);
+    })();
+  })();
+
+  applyLang();
+
+  /* live hosting only: content and login come from Firebase when firebase-config.js is present */
+  let FBP = null;
+  (function () {
+    const cfg = window.FIREBASE_CONFIG; if (!cfg || !cfg.apiKey) return;
+    const base = "https://www.gstatic.com/firebasejs/10.12.2/";
+    const load = src => new Promise((res, rej) => { const s = document.createElement("script"); s.src = base + src; s.onload = res; s.onerror = rej; document.head.append(s); });
+    FBP = (async () => {
+      await load("firebase-app-compat.js");
+      await Promise.all([load("firebase-auth-compat.js"), load("firebase-firestore-compat.js")]);
+      firebase.initializeApp(cfg);
+      return { auth: firebase.auth(), ref: firebase.firestore().doc("site/content") };
+    })();
+    FBP.then(async f => {
+      try {
+        const s = await f.ref.get();
+        if (s.exists) { const d = s.data(); ["stats", "projects", "courses", "certs", "reviews", "faq", "blog", "links"].forEach(k => { if (Array.isArray(d[k])) DATA[k] = d[k]; }); applyLang(); }
+      } catch (e) {}
+    }).catch(() => {});
+  })();
+
+  /* owner editing: the page is the record; saving republishes it */
+  (async function () {
+    let art = null, user = null, canEdit = false;
+    try { if (window.claude && claude.use) { art = await claude.use("artifact"); user = await claude.use("user"); canEdit = !!(art && user && user.canEdit()); } } catch (e) {}
+    if (!canEdit) art = null;
+    if (!canEdit && location.hash !== "#admin-tabin-k7q2x9mf4w") return;
+    let fbc = null;
+    if (FBP && !art) { try { fbc = await FBP; } catch (e) {} }
+    const COLS = {
+      projects: ["Projects", "Project name", "Description", "Type / year", "Project link"],
+      courses: ["Courses", "Course name", "Description", "Level / price / duration", "Enrollment link"],
+      certs: ["Certificates", "Certificate name", "Issuer or note", "Year", "Verify link"],
+      reviews: ["Reviews", "Client name", "Review text", "Client role", "Link"],
+      faq: ["FAQ", "Question", "Answer", "—", "—"],
+      blog: ["Blog", "Article title", "Short summary", "Date", "Article link"],
+      links: ["Social links", "Label (e.g. LinkedIn)", "—", "—", "Profile link (https://…)"]
+    };
+    let cur = "projects";
+    $("#editFab").hidden = false;
+    if (!art) $("#saveBtn").textContent = fbc ? "Save (goes live now)" : "Download updated index.html";
+    const panel = $("#panel");
+    $("#editBtn").addEventListener("click", async () => {
+      if (fbc && !fbc.auth.currentUser) {
+        try {
+          const r = await fbc.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+          if (!window.ADMIN_EMAIL || r.user.email !== window.ADMIN_EMAIL) { await fbc.auth.signOut(); toast("This account cannot edit"); return; }
+        } catch (e) { toast("Login failed"); return; }
+      }
+      panel.hidden = false; drawPanel();
+    });
+    $("#closePanel").addEventListener("click", () => { panel.hidden = true; });
+    function drawPanel() {
+      const tabs = $("#tabs"); tabs.replaceChildren(...Object.keys(COLS).map(k => h("button", { type: "button", "aria-pressed": k === cur, onclick: () => { cur = k; drawPanel(); } }, COLS[k][0])));
+      const L = COLS[cur];
+      [["#lTitle", 1], ["#lText", 2], ["#lMeta", 3], ["#lUrl", 4]].forEach(([s, i]) => { $(s).textContent = L[i]; $(s).parentElement.hidden = L[i] === "—"; });
+      const items = $("#items"); items.replaceChildren();
+      if (!DATA[cur].length) items.append(h("p", { class: "hint" }, "No entries yet."));
+      DATA[cur].forEach((e, i) => items.append(h("div", { class: "item" }, h("span", {}, e.title), h("button", { type: "button", onclick: () => { DATA[cur].splice(i, 1); drawPanel(); renderAll(); } }, "Remove"))));
+      const se = $("#statEdit"); se.replaceChildren(h("p", { class: "hint" }, "Counter numbers (About section)"), ...DATA.stats.map((s, i) => h("label", { for: "st" + i }, h("span", {}, T.en[s.k]), h("input", { id: "st" + i, type: "number", min: "0", value: s.n, oninput: ev => { s.n = Math.max(0, +ev.target.value || 0); } }))));
+    }
+    function renderAll() { renderStats(); renderLists(); renderContact(); }
+    $("#addForm").addEventListener("submit", ev => {
+      ev.preventDefault();
+      const e = { title: $("#aTitle").value.trim(), text: $("#aText").value.trim(), meta: $("#aMeta").value.trim(), url: $("#aUrl").value.trim(), image: $("#aImg").value.trim() };
+      if (!e.title) return;
+      DATA[cur].push(e); ev.target.reset(); drawPanel(); renderAll();
+    });
+    $("#saveBtn").addEventListener("click", async () => {
+      const msg = $("#saveMsg"); msg.textContent = "Publishing…";
+      try {
+        const clone = document.body.cloneNode(true);
+        $$("[data-ephemeral]", clone).forEach(n => n.remove());
+        $$("[data-render]", clone).forEach(n => n.replaceChildren());
+        $$("#svcGrid,#now,#skills,#ticker,#rows,#toast", clone).forEach(n => { if (n.id !== "toast") n.replaceChildren(); else { n.textContent = ""; n.className = ""; } });
+        $("#data", clone).textContent = JSON.stringify(DATA).replace(/</g, "\\u003c");
+        const rs = document.head.querySelector("style"); const reset = rs ? rs.textContent : "";
+        const vpm = document.head.querySelector('meta[name="viewport"]'); const vp = vpm ? vpm.getAttribute("content") : "width=device-width,initial-scale=1,viewport-fit=cover";
+        const head = document.querySelector("title") ? "" : "";
+        const html = '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="' + vp + '"><style>' + reset + '</style></head><body>' + clone.innerHTML + '</body></html>';
+        if (art) await art.publish(html); else if (fbc) await fbc.ref.set(JSON.parse(JSON.stringify(DATA))); else { const a = h("a", { href: URL.createObjectURL(new Blob([html], { type: "text/html" })), download: "index.html" }); document.body.append(a); a.click(); a.remove(); }
+        msg.textContent = art ? "Published." : fbc ? "Saved. Visitors see the new content now." : "Downloaded index.html. Upload it to GitHub to replace the old file.";
+      } catch (err) { msg.textContent = err && err.code === "conflict" ? "A newer version exists. The page reloads to it." : "Could not publish: " + ((err && err.message) || "try again"); }
+    });
+  })();
+})();
+</script>
+
+</body>
+</html>
