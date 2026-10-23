@@ -257,20 +257,20 @@ footer a:hover { color: var(--accent); }
     <p class="eyebrow" data-i18n="nav_projects">Projects</p>
     <h2 class="sec-title" data-i18n="prj_title"></h2>
     <p class="sec-sub" data-i18n="prj_sub"></p>
-    <div class="grid" id="projects" data-render></div>
+    <div class="grid" id="projectsGrid" data-render></div>
   </section>
 
   <section id="courses">
     <p class="eyebrow" data-i18n="nav_courses">Courses</p>
     <h2 class="sec-title" data-i18n="crs_title"></h2>
     <p class="sec-sub" data-i18n="crs_sub"></p>
-    <div class="grid" id="courses" data-render></div>
+    <div class="grid" id="coursesGrid" data-render></div>
   </section>
 
   <section id="certs">
     <p class="eyebrow" data-i18n="cert_eyebrow">Achievements</p>
     <h2 class="sec-title" data-i18n="cert_title"></h2>
-    <div class="grid" id="certs" data-render></div>
+    <div class="grid" id="certsGrid" data-render></div>
   </section>
 
   <section id="agency">
@@ -285,19 +285,19 @@ footer a:hover { color: var(--accent); }
   <section id="reviews">
     <p class="eyebrow" data-i18n="rev_eyebrow">Reviews</p>
     <h2 class="sec-title" data-i18n="rev_title"></h2>
-    <div class="grid" id="reviews" data-render></div>
+    <div class="grid" id="reviewsGrid" data-render></div>
   </section>
 
   <section id="faq">
     <p class="eyebrow">FAQ</p>
     <h2 class="sec-title" data-i18n="faq_title"></h2>
-    <div id="faq" data-render></div>
+    <div id="faqGrid" data-render></div>
   </section>
 
   <section id="blog">
     <p class="eyebrow" data-i18n="blog_eyebrow">Blog</p>
     <h2 class="sec-title" data-i18n="blog_title"></h2>
-    <div class="grid" id="blog" data-render></div>
+    <div class="grid" id="blogGrid" data-render></div>
   </section>
 
   <section id="contact">
@@ -452,11 +452,12 @@ footer a:hover { color: var(--accent); }
   function empty(col) { const m = t("empty")[col]; return h("div", { class: "empty", style: "grid-column:1/-1" }, h("span", { class: "dot" }), h("div", {}, h("b", {}, m[0]), h("span", {}, m[1]))); }
 
   function renderLists() {
+    const targets = { projects: "#projectsGrid", courses: "#coursesGrid", certs: "#certsGrid", reviews: "#reviewsGrid", blog: "#blogGrid" };
     for (const col of ["projects", "courses", "certs", "reviews", "blog"]) {
-      const box = $("#" + col); box.replaceChildren();
+      const box = $(targets[col]); box.replaceChildren();
       if (!DATA[col].length) box.append(empty(col)); else DATA[col].forEach(e => box.append(CARD[col](e)));
     }
-    const f = $("#faq"); f.replaceChildren();
+    const f = $("#faqGrid"); f.replaceChildren();
     DATA.faq.forEach(e => f.append(h("details", {}, h("summary", {}, e.title), h("p", {}, e.text))));
   }
   function renderStats() {
